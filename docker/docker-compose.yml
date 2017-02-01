@@ -1,4 +1,18 @@
-node:
+sailsapp_prod:
+  container_name: node_app
+  build: ./nodejs
+  volumes:
+    - "../:/server"
+    - "/usr/lib/node_modules/sails:/usr/lib/node_modules/sails"
+  command: "node app.js --prod"
+  ports:
+    - "1337:80"
+  environment:
+    - NODE_ENV=production
+  links:
+    - mongo:mongo
+
+sailsapp_dev:
   container_name: node_app
   build: ./nodejs
   volumes:
@@ -7,8 +21,6 @@ node:
   command: "sails lift"
   ports:
     - "1337:1337"
-  environment:
-    - NODE_ENV=production
   links:
     - mongo:mongo
 
